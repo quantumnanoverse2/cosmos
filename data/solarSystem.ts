@@ -231,5 +231,61 @@ export const solarSystemObjects: Record<string, SolarSystemObject> = {
     atmosphere: "The Moon has an extremely thin and tenuous exosphere.",
     missions: ["Apollo Program (NASA)", "Artemis (NASA)", "Chang'e (CNSA)", "Chandrayaan (ISRO)"],
     interestingFacts: ["We always see the same side of the Moon from Earth.", "The Moon is drifting away from Earth at a rate of 3.8 cm per year."]
+  },
+  "europa": {
+    id: "europa",
+    name: "Europa",
+    tagline: "The ocean moon",
+    heroImage: "/objects/europa.jpg",
+    quickFacts: { type: "Natural Satellite", radius: "1,560 km", mass: "4.8 × 10^22 kg", gravity: "1.31 m/s²", temperature: "-160 °C", orbitalPeriod: "3.55 days", dayLength: "3.55 Earth days" },
+    overview: "Europa is one of Jupiter's Galilean moons. It is believed to have a massive subsurface ocean of liquid water beneath its icy shell, making it one of the most promising places to look for life in our solar system.",
+    formation: "Formed from the circumplanetary disk of gas and dust surrounding Jupiter after its formation.",
+    structure: "It has an iron core, a rocky mantle, and an ocean of salty water covered by a thick crust of ice.",
+    surface: "The surface is a remarkably smooth icy crust covered in long, dark, crisscrossing fractures and cracks.",
+    atmosphere: "It has a very tenuous atmosphere composed primarily of oxygen.",
+    missions: ["Galileo (NASA)", "Europa Clipper (NASA - Upcoming)", "JUICE (ESA)"],
+    interestingFacts: ["Europa's subsurface ocean may contain more than twice the amount of water found on all of Earth.", "It is the smoothest known solid object in the Solar System."]
+  },
+  "titan": {
+    id: "titan",
+    name: "Titan",
+    tagline: "A world of liquid methane",
+    heroImage: "/objects/titan.jpg",
+    quickFacts: { type: "Natural Satellite", radius: "2,574 km", mass: "1.34 × 10^23 kg", gravity: "1.35 m/s²", temperature: "-179 °C", orbitalPeriod: "15.9 days", dayLength: "15.9 Earth days" },
+    overview: "Titan is Saturn's largest moon and the second-largest moon in the solar system. It is the only moon known to have a dense atmosphere and the only known body in space, other than Earth, where clear evidence of stable bodies of surface liquid has been found.",
+    formation: "Formed in the sub-nebula of gas and dust that surrounded Saturn shortly after its formation.",
+    structure: "Titan is composed of a rocky core surrounded by a deep subsurface ocean of liquid water, topped by a thick icy crust.",
+    surface: "The surface features lakes, rivers, and seas of liquid methane and ethane, as well as vast dunes of organic material.",
+    atmosphere: "Its thick, hazy atmosphere is primarily nitrogen, similar to Earth's, but with a high concentration of methane and organic smog.",
+    missions: ["Cassini-Huygens (NASA/ESA)", "Dragonfly (NASA - Upcoming)"],
+    interestingFacts: ["Titan is larger than the planet Mercury.", "It is the only place in the solar system besides Earth to have a liquid cycle (like Earth's water cycle) on its surface."]
+  },
+  "ganymede": {
+    id: "ganymede",
+    name: "Ganymede",
+    tagline: "The giant moon",
+    heroImage: "/objects/ganymede.jpg",
+    quickFacts: { type: "Natural Satellite", radius: "2,634 km", mass: "1.48 × 10^23 kg", gravity: "1.42 m/s²", temperature: "-163 °C", orbitalPeriod: "7.15 days", dayLength: "7.15 Earth days" },
+    overview: "Ganymede is the largest and most massive moon of Jupiter and in the Solar System. It is the only moon in our solar system known to have its own magnetic field.",
+    formation: "Formed by accretion from the nebula of gas and dust that surrounded Jupiter after its formation.",
+    structure: "It has a metallic iron core, a rocky mantle, and a thick shell of ice and liquid water.",
+    surface: "The surface is a mix of two types of terrain: highly cratered dark regions and younger, lighter regions with extensive arrays of grooves and ridges.",
+    atmosphere: "It has a very thin oxygen atmosphere.",
+    missions: ["Galileo (NASA)", "Juno (NASA)", "JUICE (ESA)"],
+    interestingFacts: ["Ganymede is larger than the planet Mercury and the dwarf planet Pluto.", "It is the only moon known to generate its own internal magnetic field."]
+  },
+  "enceladus": {
+    id: "enceladus",
+    name: "Enceladus",
+    tagline: "The icy geyser world",
+    heroImage: "/objects/enceladus.jpg",
+    quickFacts: { type: "Natural Satellite", radius: "252 km", mass: "1.08 × 10^20 kg", gravity: "0.11 m/s²", temperature: "-201 °C", orbitalPeriod: "1.37 days", dayLength: "1.37 Earth days" },
+    overview: "Enceladus is a small, icy moon of Saturn that has become one of the most exciting scientific targets in the solar system due to the discovery of water-ice geysers erupting from its south pole.",
+    formation: "Formed in the early Saturnian system from the surrounding disk of gas and dust.",
+    structure: "It has a rocky core surrounded by a global subsurface ocean of liquid water, covered by an icy crust.",
+    surface: "The surface is covered in clean, uncratered ice, making it one of the most reflective bodies in the solar system. The south pole is scarred by 'tiger stripes' where geysers erupt.",
+    atmosphere: "It has a tenuous, geologically generated atmosphere primarily made of water vapor from its geysers.",
+    missions: ["Cassini (NASA/ESA)"],
+    interestingFacts: ["Enceladus reflects almost 100% of the sunlight that strikes it.", "The geysers on Enceladus continuously feed Saturn's E ring with icy material."]
   }
 };

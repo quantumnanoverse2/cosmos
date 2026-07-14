@@ -3,7 +3,10 @@ const fs = require('fs');
 const path = require('path');
 
 const queries = [
-  { q: "lunar reconnaissance orbiter moon", file: "moon.jpg" }
+  { q: "europa moon jupiter", file: "europa.jpg" },
+  { q: "titan moon saturn cassini", file: "titan.jpg" },
+  { q: "ganymede moon jupiter", file: "ganymede.jpg" },
+  { q: "enceladus moon saturn cassini", file: "enceladus.jpg" }
 ];
 
 const downloadDir = path.join(__dirname, 'public', 'objects');

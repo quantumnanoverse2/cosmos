@@ -28,8 +28,8 @@ const categoriesData: Record<string, { title: string; subtitle: string; objectId
   },
   "famous-moons": {
     title: "Famous Moons",
-    subtitle: "The most intriguing natural satellites",
-    objectIds: ["moon"]
+    subtitle: "The most fascinating natural satellites in our solar system.",
+    objectIds: ["moon", "europa", "titan", "ganymede", "enceladus"]
   }
 };
 

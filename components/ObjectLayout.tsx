@@ -49,7 +49,7 @@ export default function ObjectLayout({ data }: Props) {
           </p>
         </motion.div>
 
-        {/* 3D Planet Viewer */}
+        {/* Visuals (3D Globe or 2D Photo) */}
         <motion.div 
           className="relative w-full lg:w-1/2 h-[50vh] lg:h-[80vh] mt-12 lg:mt-0 flex items-center justify-center"
           initial={{ scale: 0.8, opacity: 0 }}
@@ -59,8 +59,16 @@ export default function ObjectLayout({ data }: Props) {
           {/* Subtle glow behind planet */}
           <div className="absolute inset-0 bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
           
-          <div className="relative w-full h-full rounded-[3rem] overflow-hidden border border-white/5 bg-black/20 shadow-2xl backdrop-blur-sm group">
-            <PlanetViewer textureUrl={data.textureUrl || data.heroImage} />
+          <div className="relative w-full h-full rounded-[3rem] overflow-hidden border border-white/5 bg-black/20 shadow-2xl backdrop-blur-sm group flex items-center justify-center">
+            {data.textureUrl ? (
+              <PlanetViewer textureUrl={data.textureUrl} />
+            ) : (
+              <img 
+                src={data.heroImage} 
+                alt={data.name} 
+                className="w-full h-full object-contain p-8 animate-[pulse_6s_ease-in-out_infinite]"
+              />
+            )}
           </div>
         </motion.div>
 
