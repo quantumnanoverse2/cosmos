@@ -60,7 +60,7 @@ export default function ObjectLayout({ data }: Props) {
           <div className="absolute inset-0 bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
           
           <div className="relative w-full h-full rounded-[3rem] overflow-hidden border border-white/5 bg-black/20 shadow-2xl backdrop-blur-sm group">
-            <PlanetViewer textureUrl={data.heroImage} />
+            <PlanetViewer textureUrl={data.textureUrl || data.heroImage} />
           </div>
         </motion.div>
 

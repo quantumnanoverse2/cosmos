@@ -40,9 +40,13 @@ export default function PlanetViewer({ textureUrl }: { textureUrl: string }) {
     <div className="w-full h-full cursor-grab active:cursor-grabbing">
       <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
         <color attach="background" args={["#000000"]} />
-        <ambientLight intensity={0.2} />
+        <ambientLight intensity={0.4} />
+        {/* Main Sun Light */}
         <directionalLight position={[5, 3, 5]} intensity={2.5} castShadow />
-        <directionalLight position={[-5, -3, -5]} intensity={0.5} />
+        {/* Fill Light */}
+        <directionalLight position={[-5, 0, -5]} intensity={0.3} color="#ffffff" />
+        {/* Cinematic Rim Light (Blue-ish) */}
+        <directionalLight position={[-2, -2, -5]} intensity={1.5} color="#4fa8ff" />
         
         <Suspense fallback={null}>
           <Planet textureUrl={textureUrl} />
