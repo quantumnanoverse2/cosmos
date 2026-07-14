@@ -3,7 +3,7 @@ export interface SolarSystemObject {
   name: string;
   tagline: string;
   heroImage: string;
-  textureUrl: string;
+  textureUrl?: string;
   quickFacts: {
     type: string;
     radius: string;
