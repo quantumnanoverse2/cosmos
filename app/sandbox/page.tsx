@@ -23,7 +23,7 @@ export default function GravitySandbox() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [wells, setWells] = useState<GravityWell[]>([]);
   const particlesRef = useRef<Particle[]>([]);
-  const requestRef = useRef<number>();
+  const requestRef = useRef<number | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
