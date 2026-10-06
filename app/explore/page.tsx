@@ -42,6 +42,12 @@ const exploreCategories = [
     href: "/explore/space-missions",
   },
   {
+    title: "🕹️ Gravity Sandbox",
+    description: "Play with gravity! Spawn black holes and watch cosmic dust orbit them.",
+    bgImage: "/explore/sandbox.jpg",
+    href: "/sandbox",
+  },
+  {
     title: "🔭 Observatories",
     description: "See how we observe the universe across different wavelengths.",
     bgImage: "/explore/observatories.jpg",
