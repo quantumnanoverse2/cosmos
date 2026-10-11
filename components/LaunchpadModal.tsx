@@ -356,11 +356,20 @@ export default function LaunchpadModal({ isOpen, onClose }: LaunchpadModalProps)
                   <button
                     onClick={() => {
                       playSound("blip");
+                      triggerWarp("Exoplanets Archive", "/explore/exoplanets");
+                    }}
+                    className="text-purple-400 hover:text-purple-300 font-semibold underline underline-offset-4 decoration-purple-500/40 hover:decoration-purple-400"
+                  >
+                    🌍 Exoplanet Archive →
+                  </button>
+                  <button
+                    onClick={() => {
+                      playSound("blip");
                       triggerWarp("NASA News Center", "/news");
                     }}
                     className="text-blue-400 hover:text-blue-300 font-semibold underline underline-offset-4 decoration-blue-500/40 hover:decoration-blue-400"
                   >
-                    📡 Live NASA News Center →
+                    📡 Live NASA News →
                   </button>
                 </div>
                 <span className="text-blue-400 font-mono">WARP SYSTEM v2.4 READY</span>
