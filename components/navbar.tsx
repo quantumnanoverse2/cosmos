@@ -9,6 +9,7 @@ const navLinks = [
   { name: "Home", href: "/" },
   { name: "Explore", href: "/explore" },
   { name: "Solar System", href: "/explore/solar-system" },
+  { name: "News", href: "/news" },
   { name: "Sandbox", href: "/sandbox" },
 ];
 

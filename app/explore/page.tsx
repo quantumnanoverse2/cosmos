@@ -59,6 +59,12 @@ const exploreCategories = [
     bgImage: "/explore/nasa-gallery.jpg",
     href: "/explore/nasa-gallery",
   },
+  {
+    title: "📡 NASA News Center",
+    description: "Live breaking news, mission dispatches, and science releases direct from NASA.",
+    bgImage: "/explore/space-missions.jpg",
+    href: "/news",
+  },
 ];
 
 export default function ExplorePage() {

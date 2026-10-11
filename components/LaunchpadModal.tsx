@@ -350,8 +350,19 @@ export default function LaunchpadModal({ isOpen, onClose }: LaunchpadModalProps)
               </div>
 
               {/* Footer info */}
-              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-gray-500">
-                <span>Press <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-gray-300 font-mono">ESC</kbd> to disengage</span>
+              <div className="mt-6 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500">
+                <div className="flex items-center gap-3">
+                  <span>Press <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-gray-300 font-mono">ESC</kbd> to disengage</span>
+                  <button
+                    onClick={() => {
+                      playSound("blip");
+                      triggerWarp("NASA News Center", "/news");
+                    }}
+                    className="text-blue-400 hover:text-blue-300 font-semibold underline underline-offset-4 decoration-blue-500/40 hover:decoration-blue-400"
+                  >
+                    📡 Live NASA News Center →
+                  </button>
+                </div>
                 <span className="text-blue-400 font-mono">WARP SYSTEM v2.4 READY</span>
               </div>
             </motion.div>
