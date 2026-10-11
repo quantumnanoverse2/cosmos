@@ -8,6 +8,7 @@ import LaunchpadModal from "./LaunchpadModal";
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Explore", href: "/explore" },
+  { name: "Gallery", href: "/gallery" },
   { name: "NASA News", href: "/news" },
   { name: "Sandbox", href: "/sandbox" },
 ];
