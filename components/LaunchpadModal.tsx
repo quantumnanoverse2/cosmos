@@ -356,6 +356,15 @@ export default function LaunchpadModal({ isOpen, onClose }: LaunchpadModalProps)
                   <button
                     onClick={() => {
                       playSound("blip");
+                      triggerWarp("Cosmic Mystery Scanner", "/scanner");
+                    }}
+                    className="text-cyan-400 hover:text-cyan-300 font-semibold underline underline-offset-4 decoration-cyan-500/40 hover:decoration-cyan-400"
+                  >
+                    🔬 Mystery Scanner →
+                  </button>
+                  <button
+                    onClick={() => {
+                      playSound("blip");
                       triggerWarp("Exoplanets Archive", "/explore/exoplanets");
                     }}
                     className="text-purple-400 hover:text-purple-300 font-semibold underline underline-offset-4 decoration-purple-500/40 hover:decoration-purple-400"

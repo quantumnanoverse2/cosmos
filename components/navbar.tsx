@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import Link from "next/link";
 import LaunchpadModal from "./LaunchpadModal";
+import CosmicScannerModal from "./scanner/CosmicScannerModal";
 
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Explore", href: "/explore" },
+  { name: "Scanner", href: "/scanner" },
   { name: "Gallery", href: "/gallery" },
   { name: "NASA News", href: "/news" },
   { name: "Sandbox", href: "/sandbox" },
@@ -16,6 +18,7 @@ const navLinks = [
 export default function Navbar() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isLaunchpadOpen, setIsLaunchpadOpen] = useState(false);
+  const [isScannerOpen, setIsScannerOpen] = useState(false);
 
   return (
     <>
@@ -63,16 +66,31 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Launch Action Button */}
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsLaunchpadOpen(true)}
-              className="flex items-center gap-2 px-5 sm:px-6 py-2 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white text-xs sm:text-sm font-semibold shadow-[0_0_20px_rgba(79,70,229,0.5)] hover:shadow-[0_0_30px_rgba(147,51,234,0.7)] transition-all duration-300 border border-white/20 cursor-pointer"
-            >
-              <span className="text-sm">🚀</span>
-              <span>Launch</span>
-            </motion.button>
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Quick Scanner Action Button */}
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsScannerOpen(true)}
+                className="flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-full bg-cyan-950/70 hover:bg-cyan-900/80 text-cyan-300 text-xs sm:text-sm font-semibold shadow-[0_0_15px_rgba(34,211,238,0.3)] hover:shadow-[0_0_25px_rgba(34,211,238,0.5)] transition-all duration-300 border border-cyan-400/40 cursor-pointer"
+                title="Cosmic Mystery Scanner"
+              >
+                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                <span className="hidden sm:inline">📡</span>
+                <span>Scan</span>
+              </motion.button>
+
+              {/* Launch Action Button */}
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsLaunchpadOpen(true)}
+                className="flex items-center gap-2 px-4 sm:px-6 py-2 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white text-xs sm:text-sm font-semibold shadow-[0_0_20px_rgba(79,70,229,0.5)] hover:shadow-[0_0_30px_rgba(147,51,234,0.7)] transition-all duration-300 border border-white/20 cursor-pointer"
+              >
+                <span className="text-sm">🚀</span>
+                <span>Launch</span>
+              </motion.button>
+            </div>
 
           </div>
         </div>
@@ -82,6 +100,12 @@ export default function Navbar() {
       <LaunchpadModal 
         isOpen={isLaunchpadOpen} 
         onClose={() => setIsLaunchpadOpen(false)} 
+      />
+
+      {/* Cosmic Mystery Scanner HUD */}
+      <CosmicScannerModal
+        isOpen={isScannerOpen}
+        onClose={() => setIsScannerOpen(false)}
       />
     </>
   );

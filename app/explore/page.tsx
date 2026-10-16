@@ -65,6 +65,12 @@ const exploreCategories = [
     bgImage: "/explore/space-missions.jpg",
     href: "/news",
   },
+  {
+    title: "🔬 Cosmic Mystery Scanner",
+    description: "Scan sectors, calibrate scientific instruments, and investigate real astronomical enigmas.",
+    bgImage: "/explore/observatories.jpg",
+    href: "/scanner",
+  },
 ];
 
 export default function ExplorePage() {

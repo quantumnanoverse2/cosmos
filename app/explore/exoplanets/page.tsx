@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ExploreBackground from "@/components/ExploreBackground";
 import Link from "next/link";
 import { FEATURED_EXOPLANETS, FeaturedExoplanet } from "@/data/exoplanets";
+import ContextualScannerButton from "@/components/scanner/ContextualScannerButton";
 
 interface CatalogPlanet {
   name: string;
@@ -415,9 +416,12 @@ export default function ExoplanetsPage() {
                   <h2 className="text-3xl sm:text-4xl font-black text-white">
                     {selectedExoplanet.name}
                   </h2>
-                  <p className="text-sm font-semibold text-purple-400">
-                    "{selectedExoplanet.nickname}" — {selectedExoplanet.tagline}
-                  </p>
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <p className="text-sm font-semibold text-purple-400">
+                      "{selectedExoplanet.nickname}" — {selectedExoplanet.tagline}
+                    </p>
+                    <ContextualScannerButton objectId={selectedExoplanet.id} objectName={selectedExoplanet.name} />
+                  </div>
                 </div>
 
                 {/* Quick Facts Grid */}

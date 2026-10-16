@@ -15,6 +15,7 @@ const fadeUp: Variants = {
 };
 
 import PlanetViewer from "./PlanetViewer";
+import ContextualScannerButton from "./scanner/ContextualScannerButton";
 
 export default function ObjectLayout({ data }: Props) {
   return (
@@ -47,6 +48,10 @@ export default function ObjectLayout({ data }: Props) {
           <p className="text-xl sm:text-3xl text-gray-200 font-medium tracking-wide drop-shadow-md border-l-4 border-blue-500 pl-6 py-2 bg-gradient-to-r from-blue-500/10 to-transparent">
             {data.tagline}
           </p>
+
+          <div className="mt-6">
+            <ContextualScannerButton objectId={data.id} objectName={data.name} />
+          </div>
         </motion.div>
 
         {/* Visuals (3D Globe or 2D Photo) */}
