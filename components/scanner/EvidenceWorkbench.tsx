@@ -32,7 +32,9 @@ export default function EvidenceWorkbench({
   // Instrument values state
   const [instrumentValues, setInstrumentValues] = useState<Record<string, number>>({});
   const [selectedHypothesis, setSelectedHypothesis] = useState<Hypothesis | null>(null);
-  const [activeTab, setActiveTab] = useState<"telemetry" | "instruments" | "hypotheses" | "conclusion">("telemetry");
+  const [activeTab, setActiveTab] = useState<"telemetry" | "instruments" | "hypotheses" | "conclusion">(
+    isSolved ? "conclusion" : "instruments"
+  );
 
   // Initialize instrument sliders
   useEffect(() => {
@@ -122,6 +124,45 @@ export default function EvidenceWorkbench({
             <span>View 3D Celestial Object</span>
             <span>↗</span>
           </Link>
+        )}
+      </div>
+
+      {/* 3-Step Quick Mission Guide Banner */}
+      <div className="mt-4 p-3.5 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-blue-950/30 to-purple-950/30 border border-cyan-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
+        <div className="flex items-center gap-3">
+          <span className="text-xl">🎯</span>
+          <div>
+            <div className="text-xs font-bold text-white font-mono uppercase tracking-wider">
+              Investigation Objective:
+            </div>
+            <div className="text-[11px] text-gray-300 flex flex-wrap items-center gap-2 mt-0.5 font-mono">
+              <span className={`${unlockedCount < totalClues ? "text-cyan-300 font-bold underline" : "text-gray-400"}`}>1. Align Instrument Sliders</span>
+              <span className="text-gray-500">→</span>
+              <span className={`${unlockedCount === totalClues && !isSolved ? "text-purple-300 font-bold underline" : "text-gray-400"}`}>2. Decode Clues</span>
+              <span className="text-gray-500">→</span>
+              <span className={`${isSolved ? "text-emerald-300 font-bold" : "text-gray-400"}`}>3. Test & Confirm Hypothesis</span>
+            </div>
+          </div>
+        </div>
+
+        {unlockedCount < totalClues ? (
+          <button
+            onClick={() => setActiveTab("instruments")}
+            className="px-3 py-1.5 rounded-lg bg-cyan-600/30 hover:bg-cyan-600/50 border border-cyan-400/40 text-cyan-200 text-xs font-bold font-mono tracking-wide transition-all self-end sm:self-auto cursor-pointer"
+          >
+            Go to Sliders ({unlockedCount}/{totalClues}) ↓
+          </button>
+        ) : !isSolved ? (
+          <button
+            onClick={() => setActiveTab("hypotheses")}
+            className="px-3 py-1.5 rounded-lg bg-purple-600/40 hover:bg-purple-600/60 border border-purple-400/50 text-purple-200 text-xs font-bold font-mono tracking-wide transition-all self-end sm:self-auto cursor-pointer animate-pulse"
+          >
+            Solve Case Now 💡
+          </button>
+        ) : (
+          <span className="text-emerald-400 text-xs font-mono font-bold">
+            ✓ Case Solved!
+          </span>
         )}
       </div>
 
