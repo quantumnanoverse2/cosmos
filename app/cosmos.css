@@ -1,0 +1,945 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* === COLOUR TOKENS === */
+:root {
+  --ground: #FBFBFD;
+  --ink: #1D1D1F;
+  --muted: #6E6E73;
+  --muted-strong: #515154;
+  --hairline: #E5E5EA;
+  --card: #FFFFFF;
+  --card-edge: #ECECF0;
+  --chip: #F2F2F5;
+  --accent: #2F5BEA;
+  --accent-hover: #1E3FB0;
+  --night: #0B0B0D;
+  --night-text: #F5F5F7;
+  --night-muted: #C7C7CC;
+  --night-accent: #9DB8FF;
+
+  --font-display: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* === PAGE CONTAINER === */
+.cosmos-page-root {
+  background-color: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.cosmos-page-root img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.cosmos-page-root a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s ease, text-decoration 0.15s ease;
+}
+
+.cosmos-page-root a:focus-visible,
+.cosmos-page-root button:focus-visible,
+.cosmos-page-root input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* === TYPOGRAPHY TOKENS === */
+.cosmos-page-root .hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.035em;
+  max-width: 13ch;
+  text-wrap: balance;
+  color: var(--ink);
+}
+
+.cosmos-page-root .section-headline {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  color: var(--ink);
+}
+
+.cosmos-page-root .hero-subtitle {
+  font-size: clamp(19px, 2.2vw, 24px);
+  line-height: 1.45;
+  color: var(--muted-strong);
+  text-wrap: balance;
+  max-width: 38ch;
+}
+
+.cosmos-page-root .section-lede {
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--muted);
+  text-wrap: balance;
+}
+
+.cosmos-page-root .small-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.cosmos-page-root .kicker {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* === LAYOUT === */
+.cosmos-page-root .page-col {
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.cosmos-page-root .section-spacer {
+  margin-top: 112px;
+}
+
+/* === LIQUID GLASS === */
+.cosmos-page-root .glass, 
+.cosmos-page-root .glass-dark {
+  position: relative;
+  isolation: isolate;
+  -webkit-backdrop-filter: blur(22px) saturate(185%);
+  backdrop-filter: blur(22px) saturate(185%);
+}
+
+.cosmos-page-root .glass {
+  background: rgba(255, 255, 255, 0.52);
+  color: var(--ink);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.35),
+    inset 0 0 24px rgba(255, 255, 255, 0.35),
+    0 10px 36px rgba(17, 24, 39, 0.10),
+    0 1px 2px rgba(17, 24, 39, 0.06);
+}
+
+.cosmos-page-root .glass-dark {
+  background: rgba(28, 28, 32, 0.48);
+  color: var(--night-text);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.22),
+    inset 0 0 28px rgba(255, 255, 255, 0.05),
+    0 14px 44px rgba(0, 0, 0, 0.45);
+}
+
+/* Specular rim (::before on both) */
+.cosmos-page-root .glass::before, 
+.cosmos-page-root .glass-dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cosmos-page-root .glass::before {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 1.0) 0%, rgba(255, 255, 255, 0.35) 40%, rgba(255, 255, 255, 0.08) 70%, rgba(255, 255, 255, 0.75) 100%);
+}
+
+.cosmos-page-root .glass-dark::before {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.10) 40%, rgba(255, 255, 255, 0.03) 70%, rgba(255, 255, 255, 0.30) 100%);
+}
+
+/* Sheen (::after on both) */
+.cosmos-page-root .glass::after, 
+.cosmos-page-root .glass-dark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cosmos-page-root .glass::after {
+  background: radial-gradient(120% 80% at 20% 0%, rgba(255, 255, 255, 0.28) 0%, transparent 55%);
+}
+
+.cosmos-page-root .glass-dark::after {
+  background: radial-gradient(120% 80% at 20% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 55%);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .cosmos-page-root .glass {
+    background: rgba(255, 255, 255, 0.94);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .cosmos-page-root .glass-dark {
+    background: rgba(28, 28, 32, 0.94);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* === AURAS === */
+.cosmos-page-root .aura-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cosmos-page-root .aura-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 130%;
+  height: 130%;
+  object-fit: cover;
+}
+
+.cosmos-page-root .aura-hero {
+  filter: blur(75px) saturate(160%);
+  opacity: 0.26;
+}
+
+.cosmos-page-root .aura-proof {
+  filter: blur(85px) saturate(165%);
+  opacity: 0.38;
+}
+
+.cosmos-page-root .aura-cta {
+  filter: blur(70px) saturate(160%);
+  opacity: 0.34;
+}
+
+/* === BUTTONS & CONTROLS === */
+.cosmos-page-root .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 980px;
+  background: var(--accent);
+  color: #FFFFFF !important;
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 500;
+  min-height: 50px;
+  padding: 12px 26px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 8px 24px rgba(47, 91, 234, 0.28);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  min-width: 44px;
+}
+
+.cosmos-page-root .btn-primary:hover {
+  background: var(--accent-hover);
+  color: #FFFFFF !important;
+  text-decoration: none;
+}
+
+.cosmos-page-root .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 980px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 500;
+  min-height: 50px;
+  padding: 12px 26px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+  min-width: 44px;
+}
+
+.cosmos-page-root .btn-secondary:hover {
+  filter: brightness(1.04);
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.cosmos-page-root .icon-chevron {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.15s ease;
+}
+
+.cosmos-page-root .btn-secondary:hover .icon-chevron {
+  transform: translateX(2px);
+}
+
+/* === SECTION 1: FLOATING NAVIGATION === */
+.cosmos-page-root .nav-wrap {
+  position: sticky;
+  top: 20px;
+  z-index: 100;
+  width: 100%;
+}
+
+.cosmos-page-root .nav-bar {
+  border-radius: 980px;
+  padding: 10px 14px 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cosmos-page-root .nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.cosmos-page-root .nav-logo-icon {
+  width: 22px;
+  height: 22px;
+  stroke: var(--accent);
+  stroke-width: 2;
+  fill: none;
+}
+
+.cosmos-page-root .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.cosmos-page-root .nav-link {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--muted);
+  transition: color 0.15s ease;
+}
+
+.cosmos-page-root .nav-link:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.cosmos-page-root .nav-pill-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--night);
+  color: var(--night-text) !important;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 980px;
+  padding: 9px 18px;
+  text-decoration: none;
+  min-height: 44px;
+  transition: opacity 0.15s ease;
+}
+
+.cosmos-page-root .nav-pill-action:hover {
+  opacity: 0.88;
+  text-decoration: none;
+  color: var(--night-text) !important;
+}
+
+@media (max-width: 768px) {
+  .cosmos-page-root .nav-links {
+    display: none;
+  }
+}
+
+/* === SECTION 2: HERO === */
+.cosmos-page-root .hero-section {
+  position: relative;
+  margin-top: 60px;
+  padding: 64px 0 32px 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.cosmos-page-root .hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 980px;
+  padding: 6px 16px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.cosmos-page-root .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+/* === SECTION 3: SHOWCASE === */
+.cosmos-page-root .showcase-panel {
+  position: relative;
+  background: var(--night);
+  border-radius: 32px;
+  min-height: 560px;
+  box-shadow: 0 30px 80px rgba(17, 24, 39, 0.22);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 32px;
+}
+
+.cosmos-page-root .showcase-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.92;
+}
+
+.cosmos-page-root .showcase-caption {
+  position: relative;
+  z-index: 2;
+  max-width: 440px;
+  border-radius: 26px;
+  padding: 28px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cosmos-page-root .showcase-kicker {
+  color: var(--night-accent);
+}
+
+.cosmos-page-root .showcase-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--night-text);
+  letter-spacing: -0.02em;
+}
+
+.cosmos-page-root .showcase-desc {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--night-muted);
+}
+
+.cosmos-page-root .showcase-code {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--night-accent);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .cosmos-page-root .showcase-panel {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 0;
+    min-height: auto;
+  }
+  .cosmos-page-root .showcase-media {
+    position: relative;
+    height: 280px;
+  }
+  .cosmos-page-root .showcase-caption {
+    max-width: 100%;
+    margin: 16px;
+  }
+}
+
+/* === SECTION 4: STATISTICS STRIP === */
+.cosmos-page-root .stats-strip {
+  background: #FFFFFF;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  padding: 44px 0;
+}
+
+.cosmos-page-root .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px 24px;
+  list-style: none;
+}
+
+.cosmos-page-root .stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cosmos-page-root .stat-number {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.cosmos-page-root .stat-label {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* === SECTION 5: GALLERY === */
+.cosmos-page-root .gallery-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.cosmos-page-root .gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 20px;
+  grid-auto-flow: dense;
+}
+
+@media (min-width: 768px) {
+  .cosmos-page-root .figure-tile.wide {
+    grid-column: span 2;
+  }
+}
+
+.cosmos-page-root .figure-tile {
+  background: var(--card);
+  border: 1px solid var(--card-edge);
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 0;
+}
+
+.cosmos-page-root .figure-tile .image-frame {
+  position: relative;
+  padding: 20px 20px 0 20px;
+}
+
+.cosmos-page-root .figure-tile .image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0B0B0D;
+}
+
+.cosmos-page-root .figure-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cosmos-page-root .figure-tile .chip-overlay {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 4px 12px;
+  border-radius: 980px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.cosmos-page-root .figure-tile .tile-body {
+  padding: 18px 22px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cosmos-page-root .figure-tile .tile-title {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+}
+
+.cosmos-page-root .figure-tile .tile-desc {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* === SECTION 6: FEATURE ROW === */
+.cosmos-page-root .feature-card {
+  background: var(--card);
+  border: 1px solid var(--card-edge);
+  border-radius: 26px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+  gap: 36px;
+  align-items: center;
+  padding: 40px;
+}
+
+.cosmos-page-root .feature-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cosmos-page-root .feature-copy .kicker {
+  color: var(--accent);
+}
+
+.cosmos-page-root .feature-copy .section-headline {
+  font-size: clamp(30px, 4vw, 44px);
+}
+
+.cosmos-page-root .feature-media-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--night);
+}
+
+.cosmos-page-root .feature-media-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* === SECTION 7: PROOF BAND === */
+.cosmos-page-root .proof-section {
+  position: relative;
+  width: 100%;
+  background: var(--night);
+  padding: 120px 0;
+  overflow: hidden;
+}
+
+.cosmos-page-root .proof-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 56px;
+}
+
+.cosmos-page-root .proof-header .small-label {
+  color: var(--night-accent);
+}
+
+.cosmos-page-root .proof-header .section-headline {
+  color: var(--night-text);
+}
+
+.cosmos-page-root .proof-header .section-lede {
+  color: var(--night-muted);
+}
+
+.cosmos-page-root .proof-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 24px;
+}
+
+.cosmos-page-root .proof-card {
+  border-radius: 26px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cosmos-page-root .proof-figure {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--night-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.cosmos-page-root .proof-label {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--night-text);
+  line-height: 1.3;
+}
+
+.cosmos-page-root .proof-sentence {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--night-muted);
+}
+
+/* === SECTION 8: CLOSING CALL TO ACTION === */
+.cosmos-page-root .closing-wrap {
+  position: relative;
+  border-radius: 36px;
+  overflow: hidden;
+  padding: 72px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.cosmos-page-root .closing-panel {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.cosmos-page-root .closing-sentence {
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--muted-strong);
+  text-wrap: balance;
+}
+
+/* === SECTION 9: NUMBERED CARDS === */
+.cosmos-page-root .numbered-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.cosmos-page-root .numbered-note {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.cosmos-page-root .numbered-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cosmos-page-root .numbered-card {
+  background: var(--card);
+  border: 1px solid var(--card-edge);
+  border-radius: 22px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cosmos-page-root .numbered-card .card-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.cosmos-page-root .numbered-card .card-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.cosmos-page-root .numbered-card .card-title:hover {
+  text-decoration: underline;
+}
+
+.cosmos-page-root .numbered-card .card-desc {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.cosmos-page-root .numbered-card .card-link {
+  margin-top: auto;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+}
+
+.cosmos-page-root .numbered-card .card-link:hover {
+  text-decoration: underline;
+}
+
+.cosmos-page-root .numbered-card .card-link svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  transition: transform 0.15s ease;
+}
+
+.cosmos-page-root .numbered-card .card-link:hover svg {
+  transform: translateX(2px);
+}
+
+/* === SECTION 10: GETTING STARTED === */
+.cosmos-page-root .getting-started-band {
+  background: var(--chip);
+  border-radius: 32px;
+  padding: 56px 48px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 40px;
+  align-items: center;
+}
+
+.cosmos-page-root .getting-started-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cosmos-page-root .terminal-block {
+  border-radius: 22px;
+  padding: 28px;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+
+.cosmos-page-root .terminal-line {
+  display: block;
+  white-space: pre;
+}
+
+.cosmos-page-root .terminal-prompt {
+  color: var(--night-accent);
+  user-select: none;
+}
+
+.cosmos-page-root .terminal-cmd {
+  color: var(--night-text);
+}
+
+/* === SECTION 11: FOOTER === */
+.cosmos-page-root .footer-section {
+  border-top: 1px solid var(--hairline);
+  padding: 36px 0 56px 0;
+  margin-top: 112px;
+}
+
+.cosmos-page-root .footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.cosmos-page-root .footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}
+
+.cosmos-page-root .footer-link:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cosmos-page-root html {
+    scroll-behavior: auto;
+  }
+  .cosmos-page-root *, 
+  .cosmos-page-root *::before, 
+  .cosmos-page-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

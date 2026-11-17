@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COSMOS — The Open Cosmic Catalog</title>
+  <meta name="description" content="Journey across planetary systems, deep-space exoplanets, and astrophysical anomalies in one verified index.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* === COLOUR TOKENS === */
+    :root {
+      --ground: #FBFBFD;
+      --ink: #1D1D1F;
+      --muted: #6E6E73;
+      --muted-strong: #515154;
+      --hairline: #E5E5EA;
+      --card: #FFFFFF;
+      --card-edge: #ECECF0;
+      --chip: #F2F2F5;
+      --accent: #2F5BEA;
+      --accent-hover: #1E3FB0;
+      --night: #0B0B0D;
+      --night-text: #F5F5F7;
+      --night-muted: #C7C7CC;
+      --night-accent: #9DB8FF;
+
+      --font-display: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    /* === RESET & BASE === */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--ground);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--ground);
+      color: var(--ink);
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.15s ease, text-decoration 0.15s ease;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    /* === TYPOGRAPHY TOKENS === */
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.035em;
+      max-width: 13ch;
+      text-wrap: balance;
+      color: var(--ink);
+    }
+
+    .section-headline {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      text-wrap: balance;
+      color: var(--ink);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(19px, 2.2vw, 24px);
+      line-height: 1.45;
+      color: var(--muted-strong);
+      text-wrap: balance;
+    }
+
+    .section-lede {
+      font-size: 19px;
+      line-height: 1.5;
+      color: var(--muted);
+      text-wrap: balance;
+    }
+
+    .small-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .kicker {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* === LAYOUT === */
+    .page-col {
+      width: 100%;
+      max-width: 1120px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .section-spacer {
+      margin-top: 112px;
+    }
+
+    /* === LIQUID GLASS === */
+    .glass, .glass-dark {
+      position: relative;
+      isolation: isolate;
+      -webkit-backdrop-filter: blur(22px) saturate(185%);
+      backdrop-filter: blur(22px) saturate(185%);
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.52);
+      color: var(--ink);
+      box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.95),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.35),
+        inset 0 0 24px rgba(255, 255, 255, 0.35),
+        0 10px 36px rgba(17, 24, 39, 0.10),
+        0 1px 2px rgba(17, 24, 39, 0.06);
+    }
+
+    .glass-dark {
+      background: rgba(28, 28, 32, 0.48);
+      color: var(--night-text);
+      box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.22),
+        inset 0 0 28px rgba(255, 255, 255, 0.05),
+        0 14px 44px rgba(0, 0, 0, 0.45);
+    }
+
+    /* Specular rim (::before on both) */
+    .glass::before, .glass-dark::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .glass::before {
+      background: linear-gradient(140deg, rgba(255, 255, 255, 1.0) 0%, rgba(255, 255, 255, 0.35) 40%, rgba(255, 255, 255, 0.08) 70%, rgba(255, 255, 255, 0.75) 100%);
+    }
+
+    .glass-dark::before {
+      background: linear-gradient(140deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.10) 40%, rgba(255, 255, 255, 0.03) 70%, rgba(255, 255, 255, 0.30) 100%);
+    }
+
+    /* Sheen (::after on both) */
+    .glass::after, .glass-dark::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .glass::after {
+      background: radial-gradient(120% 80% at 20% 0%, rgba(255, 255, 255, 0.28) 0%, transparent 55%);
+    }
+
+    .glass-dark::after {
+      background: radial-gradient(120% 80% at 20% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 55%);
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      .glass {
+        background: rgba(255, 255, 255, 0.94);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+      }
+      .glass-dark {
+        background: rgba(28, 28, 32, 0.94);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+      }
+    }
+
+    /* === AURAS === */
+    .aura-container {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .aura-image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 130%;
+      height: 130%;
+      object-fit: cover;
+    }
+
+    .aura-hero {
+      filter: blur(75px) saturate(160%);
+      opacity: 0.26;
+    }
+
+    .aura-proof {
+      filter: blur(85px) saturate(165%);
+      opacity: 0.38;
+    }
+
+    .aura-cta {
+      filter: blur(70px) saturate(160%);
+      opacity: 0.34;
+    }
+
+    /* === BUTTONS & CONTROLS === */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 980px;
+      background: var(--accent);
+      color: #FFFFFF;
+      font-family: var(--font-body);
+      font-size: 17px;
+      font-weight: 500;
+      min-height: 50px;
+      padding: 12px 26px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 8px 24px rgba(47, 91, 234, 0.28);
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      min-width: 44px;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      color: #FFFFFF;
+      text-decoration: none;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 980px;
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 17px;
+      font-weight: 500;
+      min-height: 50px;
+      padding: 12px 26px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: filter 0.15s ease;
+      min-width: 44px;
+    }
+
+    .btn-secondary:hover {
+      filter: brightness(1.04);
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .icon-chevron {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.15s ease;
+    }
+
+    .btn-secondary:hover .icon-chevron {
+      transform: translateX(2px);
+    }
+
+    /* === SECTION 1: FLOATING NAVIGATION === */
+    .nav-wrap {
+      position: sticky;
+      top: 20px;
+      z-index: 100;
+      width: 100%;
+    }
+
+    .nav-bar {
+      border-radius: 980px;
+      padding: 10px 14px 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-logo-icon {
+      width: 22px;
+      height: 22px;
+      stroke: var(--accent);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-link {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.15s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--ink);
+      text-decoration: underline;
+    }
+
+    .nav-pill-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--night);
+      color: var(--night-text);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 980px;
+      padding: 9px 18px;
+      text-decoration: none;
+      min-height: 44px;
+      transition: opacity 0.15s ease;
+    }
+
+    .nav-pill-action:hover {
+      opacity: 0.88;
+      text-decoration: none;
+      color: var(--night-text);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* === SECTION 2: HERO === */
+    .hero-section {
+      position: relative;
+      margin-top: 60px;
+      padding: 64px 0 32px 0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 980px;
+      padding: 6px 16px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    /* === SECTION 3: SHOWCASE === */
+    .showcase-panel {
+      position: relative;
+      background: var(--night);
+      border-radius: 32px;
+      min-height: 560px;
+      box-shadow: 0 30px 80px rgba(17, 24, 39, 0.22);
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 32px;
+    }
+
+    .showcase-media {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.92;
+    }
+
+    .showcase-caption {
+      position: relative;
+      z-index: 2;
+      max-width: 440px;
+      border-radius: 26px;
+      padding: 28px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .showcase-kicker {
+      color: var(--night-accent);
+    }
+
+    .showcase-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--night-text);
+      letter-spacing: -0.02em;
+    }
+
+    .showcase-desc {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--night-muted);
+    }
+
+    .showcase-code {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 400;
+      color: var(--night-accent);
+      background: rgba(0, 0, 0, 0.4);
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-top: 4px;
+      white-space: nowrap;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 768px) {
+      .showcase-panel {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        padding: 0;
+        min-height: auto;
+      }
+      .showcase-media {
+        position: relative;
+        height: 280px;
+      }
+      .showcase-caption {
+        max-width: 100%;
+        margin: 16px;
+      }
+    }
+
+    /* === SECTION 4: STATISTICS STRIP === */
+    .stats-strip {
+      background: #FFFFFF;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      padding: 44px 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px 24px;
+      list-style: none;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 600;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stat-label {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+
+    /* === SECTION 5: GALLERY === */
+    .gallery-header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: 20px;
+      grid-auto-flow: dense;
+    }
+
+    @media (min-width: 768px) {
+      .figure-tile.wide {
+        grid-column: span 2;
+      }
+    }
+
+    .figure-tile {
+      background: var(--card);
+      border: 1px solid var(--card-edge);
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      margin: 0;
+    }
+
+    .figure-tile .image-frame {
+      position: relative;
+      padding: 20px 20px 0 20px;
+    }
+
+    .figure-tile .image-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #0B0B0D;
+    }
+
+    .figure-tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .figure-tile .chip-overlay {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      padding: 4px 12px;
+      border-radius: 980px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .figure-tile .tile-body {
+      padding: 18px 22px 22px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .figure-tile .tile-title {
+      font-family: var(--font-display);
+      font-size: 21px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--ink);
+      letter-spacing: -0.015em;
+    }
+
+    .figure-tile .tile-desc {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    /* === SECTION 6: FEATURE ROW === */
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--card-edge);
+      border-radius: 26px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+      gap: 36px;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .feature-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .feature-copy .kicker {
+      color: var(--accent);
+    }
+
+    .feature-copy .section-headline {
+      font-size: clamp(30px, 4vw, 44px);
+    }
+
+    .feature-media-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--night);
+    }
+
+    .feature-media-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* === SECTION 7: PROOF BAND === */
+    .proof-section {
+      position: relative;
+      width: 100%;
+      background: var(--night);
+      padding: 120px 0;
+      overflow: hidden;
+    }
+
+    .proof-header {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 56px;
+    }
+
+    .proof-header .small-label {
+      color: var(--night-accent);
+    }
+
+    .proof-header .section-headline {
+      color: var(--night-text);
+    }
+
+    .proof-header .section-lede {
+      color: var(--night-muted);
+    }
+
+    .proof-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+      gap: 24px;
+    }
+
+    .proof-card {
+      border-radius: 26px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .proof-figure {
+      font-family: var(--font-display);
+      font-size: 44px;
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--night-text);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .proof-label {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--night-text);
+      line-height: 1.3;
+    }
+
+    .proof-sentence {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--night-muted);
+    }
+
+    /* === SECTION 8: CLOSING CALL TO ACTION === */
+    .closing-wrap {
+      position: relative;
+      border-radius: 36px;
+      overflow: hidden;
+      padding: 72px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .closing-panel {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .closing-sentence {
+      font-size: 19px;
+      line-height: 1.5;
+      color: var(--muted-strong);
+      text-wrap: balance;
+    }
+
+    /* === SECTION 9: NUMBERED CARDS === */
+    .numbered-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .numbered-note {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .numbered-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+      gap: 20px;
+      list-style: none;
+    }
+
+    .numbered-card {
+      background: var(--card);
+      border: 1px solid var(--card-edge);
+      border-radius: 22px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .numbered-card .card-num {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .numbered-card .card-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .numbered-card .card-title:hover {
+      text-decoration: underline;
+    }
+
+    .numbered-card .card-desc {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .numbered-card .card-link {
+      margin-top: auto;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 44px;
+    }
+
+    .numbered-card .card-link:hover {
+      text-decoration: underline;
+    }
+
+    .numbered-card .card-link svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      transition: transform 0.15s ease;
+    }
+
+    .numbered-card .card-link:hover svg {
+      transform: translateX(2px);
+    }
+
+    /* === SECTION 10: GETTING STARTED === */
+    .getting-started-band {
+      background: var(--chip);
+      border-radius: 32px;
+      padding: 56px 48px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+      gap: 40px;
+      align-items: center;
+    }
+
+    .getting-started-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .terminal-block {
+      border-radius: 22px;
+      padding: 28px;
+      font-family: var(--font-mono);
+      font-size: 15px;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .terminal-line {
+      display: block;
+      white-space: pre;
+    }
+
+    .terminal-prompt {
+      color: var(--night-accent);
+      user-select: none;
+    }
+
+    .terminal-cmd {
+      color: var(--night-text);
+    }
+
+    /* === SECTION 11: FOOTER === */
+    .footer-section {
+      border-top: 1px solid var(--hairline);
+      padding: 36px 0 56px 0;
+      margin-top: 112px;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-link:hover {
+      color: var(--ink);
+      text-decoration: underline;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= 1. FLOATING NAVIGATION ================= -->
+  <header class="page-col nav-wrap">
+    <nav class="glass nav-bar" aria-label="Main Navigation">
+      <a href="/" class="nav-brand" aria-label="COSMOS Homepage">
+        <svg class="nav-logo-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/>
+          <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-30 12 12)"/>
+        </svg>
+        <span>COSMOS</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="/explore" class="nav-link">Explore</a>
+        <a href="/explore/solar-system" class="nav-link">Solar System</a>
+        <a href="/explore/exoplanets" class="nav-link">Exoplanets</a>
+        <a href="/scanner" class="nav-link">Scanner</a>
+        <a href="/gallery" class="nav-link">Gallery</a>
+        <a href="/news" class="nav-link">News</a>
+        <a href="/sandbox" class="nav-link">Sandbox</a>
+      </div>
+
+      <a href="/explore" class="nav-pill-action">
+        Open Catalog
+      </a>
+    </nav>
+  </header>
+
+  <!-- ================= 2. HERO ================= -->
+  <main>
+    <section class="page-col hero-section">
+      <div class="aura-container" aria-hidden="true">
+        <img src="/explore/galaxies.jpg" alt="" class="aura-image aura-hero">
+      </div>
+
+      <span class="glass hero-pill">
+        ASTRONOMICAL REPOSITORY
+      </span>
+
+      <h1 class="hero-headline">
+        Explore The Observable Universe
+      </h1>
+
+      <p class="hero-subtitle">
+        Journey across planetary systems, deep-space exoplanets, and astrophysical anomalies in one verified index.
+      </p>
+
+      <div class="hero-actions">
+        <a href="/explore" class="btn-primary">
+          Explore Catalog
+        </a>
+        <a href="/scanner" class="btn-secondary glass">
+          <span>Investigate Anomalies</span>
+          <svg class="icon-chevron" viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ================= 3. SHOWCASE ================= -->
+    <section class="page-col section-spacer">
+      <div class="showcase-panel">
+        <img src="/explore/galaxies.jpg" alt="High-resolution deep-space galaxy showcase exhibit" class="showcase-media">
+        
+        <div class="glass-dark showcase-caption">
+          <span class="kicker showcase-kicker">OBSERVATIONAL ASTROPHYSICS</span>
+          <h2 class="showcase-title">Messier 31 &amp; Andromeda Horizon</h2>
+          <p class="showcase-desc">
+            A high-resolution index of celestial bodies, spectroscopic measurements, and planetary orbital parameters gathered across NASA, ESA, and international astronomical survey archives.
+          </p>
+          <div class="showcase-code">
+            <code>v = &radic;(G &middot; M / r) &asymp; 250 km/s</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 4. STATISTICS STRIP ================= -->
+    <section class="stats-strip section-spacer" aria-label="Key Astronomical Metrics">
+      <div class="page-col">
+        <dl class="stats-grid">
+          <div class="stat-item">
+            <dd class="stat-number">5,500+</dd>
+            <dt class="stat-label">Confirmed Exoplanets</dt>
+          </div>
+          <div class="stat-item">
+            <dd class="stat-number">26</dd>
+            <dt class="stat-label">Solar System Bodies</dt>
+          </div>
+          <div class="stat-item">
+            <dd class="stat-number">6,800+</dd>
+            <dt class="stat-label">NASA Mission Dispatches</dt>
+          </div>
+          <div class="stat-item">
+            <dd class="stat-number">12.7B</dd>
+            <dt class="stat-label">Years Oldest Known Planet</dt>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 5. GALLERY ================= -->
+    <section class="page-col section-spacer">
+      <div class="gallery-header">
+        <h2 class="section-headline">Planetary &amp; Deep Space Exhibits</h2>
+        <p class="section-lede">
+          Curated high-resolution imagery and physical parameters from planetary exploration missions and orbital space telescopes.
+        </p>
+      </div>
+
+      <div class="gallery-grid">
+        <!-- Tile 1: Wide -->
+        <figure class="figure-tile wide">
+          <div class="image-frame">
+            <div class="image-wrap">
+              <img src="/explore/solar-system.jpg" alt="Panoramic view of the solar system planetary orbital planes">
+              <span class="glass chip-overlay">SYS.SOLAR</span>
+            </div>
+          </div>
+          <figcaption class="tile-body">
+            <h3 class="tile-title">The Solar System Architecture</h3>
+            <p class="tile-desc">Planetary structures, atmospheres, and orbital dynamics from the Sun to the Kuiper Belt.</p>
+          </figcaption>
+        </figure>
+
+        <!-- Tile 2 -->
+        <figure class="figure-tile">
+          <div class="image-frame">
+            <div class="image-wrap">
+              <img src="/objects/earth.jpg" alt="Orbital capture of planet Earth showing continental masses and oceans">
+              <span class="glass chip-overlay">OBJ.399</span>
+            </div>
+          </div>
+          <figcaption class="tile-body">
+            <h3 class="tile-title">Terra (Earth)</h3>
+            <p class="tile-desc">The only confirmed astronomical object harboring active surface liquid water oceans.</p>
+          </figcaption>
+        </figure>
+
+        <!-- Tile 3 -->
+        <figure class="figure-tile">
+          <div class="image-frame">
+            <div class="image-wrap">
+              <img src="/objects/jupiter.jpg" alt="Atmospheric bands and storm systems of Jupiter">
+              <span class="glass chip-overlay">OBJ.599</span>
+            </div>
+          </div>
+          <figcaption class="tile-body">
+            <h3 class="tile-title">Jupiter System</h3>
+            <p class="tile-desc">Gas giant with a mass greater than all other solar system planets combined.</p>
+          </figcaption>
+        </figure>
+
+        <!-- Tile 4 -->
+        <figure class="figure-tile">
+          <div class="image-frame">
+            <div class="image-wrap">
+              <img src="/objects/europa.jpg" alt="Fractured ice shell of Jovian moon Europa">
+              <span class="glass chip-overlay">SAT.502</span>
+            </div>
+          </div>
+          <figcaption class="tile-body">
+            <h3 class="tile-title">Europa Ocean World</h3>
+            <p class="tile-desc">Subsurface saline ocean shielded beneath a fractured twenty-kilometer ice crust.</p>
+          </figcaption>
+        </figure>
+
+        <!-- Tile 5: Wide -->
+        <figure class="figure-tile wide">
+          <div class="image-frame">
+            <div class="image-wrap">
+              <img src="/explore/exoplanets.jpg" alt="Artist rendering of distant extrasolar planetary system">
+              <span class="glass chip-overlay">EXO.ARCHIVE</span>
+            </div>
+          </div>
+          <figcaption class="tile-body">
+            <h3 class="tile-title">Exoplanetary Extremes</h3>
+            <p class="tile-desc">Over five thousand verified extrasolar worlds cataloged across the Milky Way.</p>
+          </figcaption>
+        </figure>
+
+        <!-- Tile 6 -->
+        <figure class="figure-tile">
+          <div class="image-frame">
+            <div class="image-wrap">
+              <img src="/objects/mars.jpg" alt="Red terrain and polar caps of planet Mars">
+              <span class="glass chip-overlay">OBJ.499</span>
+            </div>
+          </div>
+          <figcaption class="tile-body">
+            <h3 class="tile-title">Mars (Gale Crater)</h3>
+            <p class="tile-desc">Volcanic and sedimentary terrain exhibiting episodic nocturnal methane venting.</p>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= 6. FEATURE ROW ================= -->
+    <section class="page-col section-spacer">
+      <div class="feature-card">
+        <div class="feature-copy">
+          <span class="kicker">ASTROPHYSICAL SIMULATION</span>
+          <h2 class="section-headline">Real-Time Gravitational Mechanics</h2>
+          <p class="section-lede">
+            Model orbital resonance, relativistic black hole accretion discs, and galactic collisions with live N-body physics directly in your browser.
+          </p>
+          <div>
+            <a href="/sandbox" class="btn-primary">
+              Launch Sandbox
+            </a>
+          </div>
+        </div>
+        <div class="feature-media-frame">
+          <img src="/explore/sandbox.jpg" alt="Interactive celestial gravitational particle simulation exhibit">
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 7. PROOF BAND ================= -->
+    <section class="proof-section section-spacer">
+      <div class="aura-container" aria-hidden="true">
+        <img src="/solar-system/sun.jpg" alt="" class="aura-image aura-proof">
+      </div>
+
+      <div class="page-col">
+        <div class="proof-header">
+          <span class="small-label kicker">EMPIRICAL BENCHMARKS</span>
+          <h2 class="section-headline">Scientific Grounding &amp; Precision</h2>
+          <p class="section-lede">
+            Every observation is anchored to peer-reviewed datasets from NASA, ESA, and international astronomical consortia.
+          </p>
+        </div>
+
+        <div class="proof-grid">
+          <div class="glass-dark proof-card">
+            <div class="proof-figure">4.24 ly</div>
+            <div class="proof-label">Proxima Centauri b</div>
+            <p class="proof-sentence">Humanity's closest confirmed extrasolar planet candidate located in the habitable zone of our neighboring star.</p>
+          </div>
+
+          <div class="glass-dark proof-card">
+            <div class="proof-figure">2,400&deg;C</div>
+            <div class="proof-label">Atmospheric Phase Shift</div>
+            <p class="proof-sentence">WASP-76b demonstrates gaseous iron vaporization on its dayside and liquid metallic condensation on its nightside.</p>
+          </div>
+
+          <div class="glass-dark proof-card">
+            <div class="proof-figure">121.6 nm</div>
+            <div class="proof-label">Lyman-Alpha Detection</div>
+            <p class="proof-sentence">Space telescope ultraviolet imaging confirmed episodic 200-kilometer water vapor plumes venting from Europa's fractured ice shell.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 8. CLOSING CALL TO ACTION ================= -->
+    <section class="page-col section-spacer">
+      <div class="closing-wrap">
+        <div class="aura-container" aria-hidden="true">
+          <img src="/objects/earth.jpg" alt="" class="aura-image aura-cta">
+        </div>
+
+        <div class="glass closing-panel">
+          <h2 class="section-headline">Begin Your Cosmic Survey</h2>
+          <p class="closing-sentence">
+            Inspect 3D planetary models, query five thousand exoplanets, and investigate real astronomical enigmas.
+          </p>
+          <a href="/explore" class="btn-primary">
+            Open Exploration Hub
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 9. NUMBERED CARDS ================= -->
+    <section class="page-col section-spacer">
+      <div class="numbered-header">
+        <h2 class="section-headline">Systematic Catalog Directory</h2>
+        <span class="numbered-note">Structured scientific sectors</span>
+      </div>
+
+      <ol class="numbered-grid">
+        <li class="numbered-card">
+          <span class="card-num">01</span>
+          <a href="/explore/solar-system" class="card-title">Solar System Directory</a>
+          <p class="card-desc">Interactive 3D representations and physical parameters for the Sun, 8 planets, Pluto, and major moons.</p>
+          <a href="/explore/solar-system" class="card-link">
+            <span>Explore Solar System</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </li>
+
+        <li class="numbered-card">
+          <span class="card-num">02</span>
+          <a href="/explore/exoplanets" class="card-title">NASA Exoplanet Archive</a>
+          <p class="card-desc">Comprehensive database of over 5,500 alien worlds streamed live from the NASA Caltech TAP astronomical API.</p>
+          <a href="/explore/exoplanets" class="card-link">
+            <span>Search Exoplanets</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </li>
+
+        <li class="numbered-card">
+          <span class="card-num">03</span>
+          <a href="/scanner" class="card-title">Cosmic Mystery Scanner</a>
+          <p class="card-desc">Interactive scientific instrumentation array to inspect anomalies, decode evidence, and test hypotheses.</p>
+          <a href="/scanner" class="card-link">
+            <span>Launch Scanner</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </li>
+
+        <li class="numbered-card">
+          <span class="card-num">04</span>
+          <a href="/sandbox" class="card-title">Astrophysical Sandbox</a>
+          <p class="card-desc">Multi-mode gravitational simulator featuring supernova detonations, black holes, and galaxy mergers.</p>
+          <a href="/sandbox" class="card-link">
+            <span>Start Simulation</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ================= 10. GETTING STARTED ================= -->
+    <section class="page-col section-spacer">
+      <div class="getting-started-band">
+        <div class="getting-started-copy">
+          <h2 class="section-headline">Direct Catalog Access</h2>
+          <p class="section-lede">
+            Access observational telemetry and catalog data directly via local CLI commands or standard REST endpoints.
+          </p>
+        </div>
+
+        <div class="glass-dark terminal-block">
+          <code class="terminal-line"><span class="terminal-prompt">$ </span><span class="terminal-cmd">curl -s https://cosmos-flax-gamma.vercel.app/api/exoplanets</span></code>
+          <code class="terminal-line"><span class="terminal-prompt">$ </span><span class="terminal-cmd">npx cosmos inspect --object=europa --spectroscopy=uv</span></code>
+          <code class="terminal-line"><span class="terminal-prompt">$ </span><span class="terminal-cmd">git clone https://github.com/quantumnanoverse2/cosmos.git</span></code>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= 11. FOOTER ================= -->
+  <footer class="footer-section">
+    <div class="page-col footer-content">
+      <div>COSMOS v2.4 &bull; Open Astronomical Index &bull; MIT Licence</div>
+      <nav class="footer-links" aria-label="Footer Navigation">
+        <a href="/explore" class="footer-link">Explore</a>
+        <a href="/explore/exoplanets" class="footer-link">Exoplanets</a>
+        <a href="/scanner" class="footer-link">Scanner</a>
+        <a href="/gallery" class="footer-link">Gallery</a>
+        <a href="/news" class="footer-link">News</a>
+        <a href="/sandbox" class="footer-link">Sandbox</a>
+        <a href="https://github.com/quantumnanoverse2/cosmos" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>

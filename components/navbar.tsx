@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import LaunchpadModal from "./LaunchpadModal";
 import CosmicScannerModal from "./scanner/CosmicScannerModal";
 
@@ -16,9 +17,14 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isLaunchpadOpen, setIsLaunchpadOpen] = useState(false);
   const [isScannerOpen, setIsScannerOpen] = useState(false);
+
+  if (pathname === "/") {
+    return null;
+  }
 
   return (
     <>
